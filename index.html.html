@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ভিডিওটি দেখুন</title>
+    <style>
+        /* General Body Styles */
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Main Container */
+        .container {
+            background-color: #1e1e1e; /* Slightly lighter dark shade */
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        /* Screenshot Image */
+        .screenshot {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #444;
+        }
+
+        /* Instruction Text */
+        .instructions {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffc107; /* Amber color for attention */
+            margin-bottom: 25px;
+        }
+
+        /* Ad Links Container */
+        .ad-links {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Individual Ad Link Style */
+        .ad-link {
+            display: block;
+            background-color: #007bff; /* Blue */
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        
+        .ad-link:hover {
+            background-color: #0056b3; /* Darker Blue */
+            transform: scale(1.03);
+        }
+
+        /* Style for clicked Ad links */
+        .ad-link.clicked {
+            background-color: #28a745; /* Green for success */
+            cursor: not-allowed;
+            pointer-events: none; /* Disable further clicks */
+        }
+        .ad-link.clicked::after {
+            content: ' (ধন্যবাদ!)';
+        }
+
+        /* Main Content Button */
+        .main-content-button {
+            background-color: #28a745; /* Green */
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .main-content-button:hover:not(:disabled) {
+            background-color: #218838; /* Darker Green */
+            transform: scale(1.02);
+        }
+
+        /* Disabled state for the main button */
+        .main-content-button:disabled {
+            background-color: #555;
+            color: #aaa;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        /* Placeholder for more ads */
+        .extra-ads {
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 1. Screenshot -->
+        <img src="https://i.postimg.cc/1XwfsCRK/Whats-App-Image-2025-06-08-at-11-00-28-AM.jpg" alt="Video Screenshot" class="screenshot">
+
+        <!-- 2. Instruction Text -->
+        <p class="instructions">ভিডিওটি দেখতে ২টি এড দেখতে হবে</p>
+
+        <!-- 3. Ad Links -->
+        <div class="ad-links">
+            <!-- Adstera Direct Link 1 -->
+            <a href="আপনার ADSTERA DIRECT LINK 1 এখানে দিন" target="_blank" class="ad-link" id="ad1">বিজ্ঞাপন ১ (Ad 1)</a>
+            
+            <!-- Adstera Direct Link 2 -->
+            <a href="আপনার ADSTERA DIRECT LINK 2 এখানে দিন" target="_blank" class="ad-link" id="ad2">বিজ্ঞাপন ২ (Ad 2)</a>
+        </div>
+
+        <!-- 4. Main Content Button (Initially Disabled) -->
+        <div>
+            <button class="main-content-button" id="playButton" disabled>
+                আগে বিজ্ঞাপন দেখুন
+            </button>
+        </div>
+        
+        <!-- 5. Placeholder for more ads -->
+        <div class="extra-ads">
+             <!-- এখানে আপনি আপনার অন্য কোনো AdSense বা Adstera ব্যানার কোড বসাতে পারেন -->
+             <p>আরো বিজ্ঞাপনের জন্য স্থান</p>
+        </div>
+    </div>
+
+    <script>
+        // Get references to the HTML elements
+        const ad1Link = document.getElementById('ad1');
+        const ad2Link = document.getElementById('ad2');
+        const playButton = document.getElementById('playButton');
+        const mainVideoUrl = 'https://gofile.io/d/qHt5b5';
+
+        // State to track clicks
+        const clicks = {
+            ad1: false,
+            ad2: false
+        };
+
+        // Function to check if both ads have been clicked and enable the button
+        function checkAndEnableButton() {
+            if (clicks.ad1 && clicks.ad2) {
+                playButton.disabled = false;
+                playButton.textContent = '✅ ভিডিওটি এখন দেখুন (Play/Download)';
+            }
+        }
+
+        // Add click event listener for the first ad link
+        ad1Link.addEventListener('click', () => {
+            if (!clicks.ad1) {
+                clicks.ad1 = true;
+                ad1Link.classList.add('clicked'); // Add green background
+                checkAndEnableButton();
+            }
+        }, { once: true }); // { once: true } ensures the event fires only one time per link
+
+        // Add click event listener for the second ad link
+        ad2Link.addEventListener('click', () => {
+            if (!clicks.ad2) {
+                clicks.ad2 = true;
+                ad2Link.classList.add('clicked'); // Add green background
+                checkAndEnableButton();
+            }
+        }, { once: true });
+
+        // Add click event listener for the final play/download button
+        playButton.addEventListener('click', () => {
+            // Redirect to the main content when the button is clicked
+            window.location.href = mainVideoUrl;
+        });
+    </script>
+
+</body>
+</html>
